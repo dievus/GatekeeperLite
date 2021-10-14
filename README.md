@@ -1,7 +1,6 @@
 # MayorSecBackdoor
-# Gatekeeper
 [![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/M4M03Q2JN)
-### Fully functioning, password protected, bind-type backdoor
+### Fully functioning bind-type backdoor
 ![Gatekeeper](/images/backdoorlite.png)
 
 This backdoor is a fully functioning bind shell and lite version of my full functioning Gatekeeper tool. It can be ran with Python or compiled to an exe and has full functioning command line access with Windows and Linux.
