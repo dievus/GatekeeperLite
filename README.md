@@ -1,5 +1,6 @@
 # MayorSec Backdoor
 [![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/M4M03Q2JN)
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Fdievus%2FMayorSecBackdoor.svg?type=shield)](https://app.fossa.com/projects/git%2Bgithub.com%2Fdievus%2FMayorSecBackdoor?ref=badge_shield)
 ### Fully functioning bind-type backdoor
 ![Gatekeeper](/images/backdoorlite.png)
 
@@ -21,3 +22,7 @@ This tool can be ran on systems that have Python3 installed, or can be compiled 
 
 ## Notes
 Windows will likely require a firewall rule in order to utilize this tool on machines with firewall enabled.  You can achieve persistence through typical manual Registry edits, scheduled tasks, etc. 
+
+
+## License
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Fdievus%2FMayorSecBackdoor.svg?type=large)](https://app.fossa.com/projects/git%2Bgithub.com%2Fdievus%2FMayorSecBackdoor?ref=badge_large)
